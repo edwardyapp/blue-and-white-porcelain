@@ -1,0 +1,24 @@
+# Image data (too large for git; redistribution rights not yet checked)
+images*/
+数据集/
+
+# Experiment outputs and checkpoints
+experiments/
+
+# Model weights and large arrays
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.npy
+*.npz
+*.pkl
+
+# Python clutter
+__pycache__/
+.ipynb_checkpoints/
+visual_explanations_seed50.html
+
+# Environment and IDE
+.venv/
+.idea/
