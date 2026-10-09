@@ -17,9 +17,12 @@ seeds, and results are reported as mean ± 95% confidence interval. The
 repository also contains the scripts for the learning curves, the
 Grad-CAM / Ablation-CAM / Score-CAM visualisations and the t-SNE plot.
 
-This repository contains the code exactly as used for the published results
-(tag `paper-original`). See [Implementation notes](#implementation-notes) for
-details that differ from the paper's description.
+This repository contains the code exactly as used for the published results.
+For readability, exploratory scripts have since been moved to `archive/` and
+data-preparation scripts to `data_preparation/`; no file content has changed,
+and the exact original layout is at tag `paper-original`. See
+[Implementation notes](#implementation-notes) for details that differ from the
+paper's description.
 
 ---
 
@@ -36,11 +39,21 @@ details that differ from the paper's description.
 | `tSNE.py` | t-SNE of backbone features of the test images (Fig. 3). |
 | `dataset_summary_statistics.py` | Image count and size range of the dataset. |
 | `filtered_chinese_porcelain.csv` | Met Open Access metadata for the Chinese porcelain objects; dynasty labels are derived from it. |
+| `object-IDs.csv` | Default object-ID list for the optional ID filter in `main.py` (`filter_by_object_id_file`, off in the published runs). |
+| `multi_seed_results.csv` | Written by `main.py` and overwritten by every run; the per-experiment `summary.txt` files are authoritative. |
+| `blue-object-ids.csv` | IDs of the blue-and-white objects selected from the collection; read by `data_preparation/rename-files.py`. |
+| `visual_explanations_seed50.pdf` | Fig. 2 as produced by `visualExplanation.py`. |
+| `tsne_perp30_iter1000.pdf` | Fig. 3 as produced by `tSNE.py`. |
 | `requirements-original.txt` | Exact package versions of the environment used. |
 | `bash_logs/` | Console output of six of the seven published runs, including the arguments used, and of two runs not in the paper (see [Tables 1–3](#tables-13)). |
 | `paper/paper.pdf` | The published paper. |
 
-### Data preparation helpers
+### Data preparation (`data_preparation/`)
+
+Run these from the repository root (e.g. `python
+data_preparation/rename-files.py`); they read and write paths relative to the
+root, so `generate_period_visual_audit.py` writes `period_visual_audit.html`
+to the root.
 
 | File | Purpose |
 |---|---|
@@ -48,13 +61,15 @@ details that differ from the paper's description.
 | `checkDynastyAndDates.py` | Compares the dynasty in the `Period` text with the dynasty implied by the object dates. |
 | `rename-files.py`, `recreateImageFolderHierarchy.py` | Flatten object folders for manual review and rebuild them afterwards. |
 | `generate_period_visual_audit.py` | HTML gallery of objects grouped by reign period, used for visual review (`period_visual_audit.html`). The gallery references images in an earlier folder (`images_clean/`), which are not distributed, so its images do not display. |
-| `blue-object-ids.csv` | IDs of the blue-and-white objects selected from the collection. |
 
 The final image set was curated by hand: objects and images were removed after
 visual review, and views were renamed by type. No script records this
 curation. The image-order manifest (see [Data](#data)) records the result.
 
-### Exploratory and abandoned scripts (not used for the published results)
+### Archive (`archive/`; not used for the published results)
+
+Kept for reference. The scripts use paths relative to the repository root and
+are not maintained.
 
 | File | Notes |
 |---|---|
@@ -63,9 +78,9 @@ curation. The image-order manifest (see [Data](#data)) records the result.
 | `augmentImages.py` | Offline augmentation (not used; augmentation is done on the fly in `main.py`). |
 | `auto_crop_objects.py`, `auto_crop_objects2.py`, `auto_crop_objects3.py`, `sam_auto_crop.py`, `fasterrcnn_coco_crop.py`, `faster_rcnn_auto_crop.py`, `generate_pseudo_boxes.py`, `train_ceramic_detector.py` | Automatic cropping experiments; the published results use uncropped images. |
 | `preview_yolo_boxes.py` | Viewer for an unrelated detection dataset. |
-| `object-IDs.csv`, `unique_object_ids.csv`, `pseudo_boxes.csv`, `learning_curves_gold_standard.csv`, `multi_seed_results.csv` | Intermediate or scratch files. `multi_seed_results.csv` is overwritten by every `main.py` run. |
-| `tsne_perp*_iter*.pdf`, `tsne_dynasty_correctness.pdf` | t-SNE parameter sweep. Fig. 3 is `tsne_perp30_iter1000.pdf`. |
-| `visual_explanations_seed50.pdf` | Fig. 2 as produced by `visualExplanation.py`. |
+| `unique_object_ids.csv`, `pseudo_boxes.csv`, `learning_curves_gold_standard.csv` | Intermediate or scratch files. |
+| `tsne_perp*_iter*.pdf` | t-SNE parameter sweep (24 settings). Fig. 3 (`tsne_perp30_iter1000.pdf`) is in the root. |
+| `tsne_dynasty_correctness.pdf` | Earlier t-SNE output; its name is the default file name in `tSNE.py`, which the current script no longer uses. |
 
 ---
 
