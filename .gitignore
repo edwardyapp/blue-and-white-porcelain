@@ -1,6 +1,5 @@
-# Image data (too large for git; redistribution rights not yet checked)
+# Image data (distributed via Zenodo)
 images*/
-数据集/
 
 # Experiment outputs and checkpoints
 experiments/
